@@ -1,6 +1,5 @@
 ﻿namespace csOdin.LinqUtils.Filters
 {
-    using csOdin.LinqUtils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,7 +17,7 @@
             _filterClauses.AddRange(andClauses);
         }
 
-        public override Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter)
+        public override Expression<Func<T, bool>> ToLinq(ParameterExpression parameter)
         {
             ValidatecConditions();
 
@@ -29,7 +28,7 @@
 
             orClauses.ToList().ForEach(oc => orExpression = Expression.OrElse(orExpression, oc));
 
-            _filterClauses.ForEach(ac => orExpression = Expression.OrElse(orExpression, ac.ToLinqExpression(parameter).Body));
+            _filterClauses.ForEach(ac => orExpression = Expression.OrElse(orExpression, ac.ToLinq(parameter).Body));
 
             return Expression.Lambda<Func<T, bool>>(orExpression, parameter);
         }

@@ -21,7 +21,7 @@
 
             var andClause = new AndClause<Person>();
             andClause.Add(condition1, condition2);
-            var filter = andClause.ToLinqExpression();
+            var filter = andClause.ToLinq();
 
             var filteredPeople = people.Where(filter);
             filteredPeople.Should().NotBeNull();
@@ -52,7 +52,7 @@
             andClause.Add(andCondition);
             andClause.Add(orClause);
 
-            var filter = andClause.ToLinqExpression();
+            var filter = andClause.ToLinq();
 
             var filteredPeople = people.Where(filter);
             filteredPeople.Should().NotBeNull();
@@ -71,7 +71,7 @@
             var expectedcount = people.Count();
 
             var andClause = new AndClause<Person>();
-            Assert.Throws<FilterClauseWithoutConditionsException>(() => andClause.ToLinqExpression());
+            Assert.Throws<FilterClauseWithoutConditionsException>(() => andClause.ToLinq());
         }
     }
 }

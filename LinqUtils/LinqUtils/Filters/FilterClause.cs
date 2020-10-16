@@ -22,13 +22,13 @@
             Conditions.AddRange(conditions);
         }
 
-        public abstract Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter);
-
-        public Expression<Func<T, bool>> ToLinqExpression()
+        public Expression<Func<T, bool>> ToLinq()
         {
             var parameter = Expression.Parameter(typeof(T));
-            return ToLinqExpression(parameter);
+            return ToLinq(parameter);
         }
+
+        public abstract Expression<Func<T, bool>> ToLinq(ParameterExpression parameter);
 
         protected void ValidatecConditions()
         {

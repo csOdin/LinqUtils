@@ -30,7 +30,7 @@
             orClause.Add(condition1);
             orClause.Add(andClause);
 
-            var filter = orClause.ToLinqExpression();
+            var filter = orClause.ToLinq();
 
             var filteredPeople = people.Where(filter);
             filteredPeople.Should().NotBeNull();
@@ -56,7 +56,7 @@
 
             var orClause = new OrClause<Person>();
             orClause.Add(condition1, condition2);
-            var filter = orClause.ToLinqExpression();
+            var filter = orClause.ToLinq();
 
             var filteredPeople = people.Where(filter);
             filteredPeople.Should().NotBeNull();
@@ -73,7 +73,7 @@
             var expectedcount = people.Count();
 
             var orClause = new OrClause<Person>();
-            Assert.Throws<FilterClauseWithoutConditionsException>(() => orClause.ToLinqExpression());
+            Assert.Throws<FilterClauseWithoutConditionsException>(() => orClause.ToLinq());
         }
     }
 }

@@ -17,7 +17,7 @@
             _filterClauses.AddRange(orClauses);
         }
 
-        public override Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter)
+        public override Expression<Func<T, bool>> ToLinq(ParameterExpression parameter)
         {
             ValidatecConditions();
 
@@ -28,7 +28,7 @@
 
             andClauses.ToList().ForEach(ac => andExpression = Expression.AndAlso(andExpression, ac));
 
-            _filterClauses.ForEach(oc => andExpression = Expression.AndAlso(andExpression, oc.ToLinqExpression(parameter).Body));
+            _filterClauses.ForEach(oc => andExpression = Expression.AndAlso(andExpression, oc.ToLinq(parameter).Body));
 
             return Expression.Lambda<Func<T, bool>>(andExpression, parameter);
         }
