@@ -1,16 +1,15 @@
 ﻿namespace csOdin.LinqUtils.Filters
 {
+    using csOdin.LinqUtils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
     public abstract class FilterClause<T>
     {
-        public FilterClause()
-        {
-            Conditions = new List<Condition<T>>();
-            Expressions = new List<Expression<Func<T, bool>>>();
-        }
+        protected readonly List<FilterClause<T>> _filterClauses = new List<FilterClause<T>>();
+
+        public FilterClause() => Conditions = new List<Condition<T>>();
 
         protected List<Condition<T>> Conditions { get; }
         protected List<Expression<Func<T, bool>>> Expressions { get; }
@@ -39,6 +38,14 @@
         {
             var parameter = Expression.Parameter(typeof(T));
             return ToLinqExpression(parameter);
+        }
+
+        protected void ValidatecConditions()
+        {
+            if (Conditions.IsNullOrempty() && _filterClauses.IsNullOrempty())
+            {
+                throw new FilterClauseWithoutConditionsException();
+            }
         }
     }
 }

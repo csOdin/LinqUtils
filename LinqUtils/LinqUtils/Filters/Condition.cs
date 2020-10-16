@@ -8,6 +8,8 @@
 
     public class Condition<T>
     {
+        private readonly Expression<Func<T, bool>> _expression = null;
+
         public Condition(Expression<Func<T, object>> property, FilterOperators filterOperator, string value)
         {
             Operator = filterOperator;
@@ -22,20 +24,26 @@
             Value = value;
         }
 
+        public Condition(Expression<Func<T, bool>> condition) => _expression = condition;
+
         public FilterOperators Operator { get; private set; } = FilterOperators.Contains;
 
         public string PropertyName { get; private set; }
         public string Value { get; private set; }
         private List<string> PropertyNameParts => PropertyName.Split('.').ToList();
 
-        public Expression<Func<T, bool>> ToLinqExpression()
+        public Expression<Func<T, bool>> ToLinq()
+
         {
+            if (_expression != null)
+            {
+                return _expression;
+            }
             var parameter = Expression.Parameter(typeof(T));
-            return ToLinqExpression(parameter);
+            return ToLinq(parameter);
         }
 
-        internal Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter)
-
+        internal Expression<Func<T, bool>> ToLinq(ParameterExpression parameter)
         {
             var stringContainsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
             Expression body = parameter;

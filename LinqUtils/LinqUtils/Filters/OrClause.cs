@@ -8,8 +8,6 @@
 
     public class OrClause<T> : FilterClause<T>
     {
-        private readonly List<AndClause<T>> _andClauses = new List<AndClause<T>>();
-
         public void Add(params AndClause<T>[] andClauses)
         {
             if (andClauses == null)
@@ -17,23 +15,22 @@
                 return;
             }
 
-            _andClauses.AddRange(andClauses);
+            _filterClauses.AddRange(andClauses);
         }
 
         public override Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter)
         {
+
+            ValidatecConditions();
+
             Expression orExpression = Expression.Constant(false);
-            if (Conditions.IsNullOrempty() && _andClauses.IsNullOrempty() && Expressions.IsNullOrempty())
-            {
-                throw new FilterClauseWithoutConditionsException();
-            }
 
             var orClauses = new List<Expression>();
-            Conditions.ToList().ForEach(condition => orClauses.Add(condition.ToLinqExpression(parameter).Body));
+            Conditions.ToList().ForEach(condition => orClauses.Add(condition.ToLinq(parameter).Body));
 
             orClauses.ToList().ForEach(oc => orExpression = Expression.OrElse(orExpression, oc));
 
-            _andClauses.ForEach(ac => orExpression = Expression.OrElse(orExpression, ac.ToLinqExpression(parameter).Body));
+            _filterClauses.ForEach(ac => orExpression = Expression.OrElse(orExpression, ac.ToLinqExpression(parameter).Body));
 
             Expressions.ForEach(ex => orExpression = Expression.OrElse(orExpression, ex.Body));
 
