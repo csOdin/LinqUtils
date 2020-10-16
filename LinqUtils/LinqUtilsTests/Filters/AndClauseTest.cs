@@ -1,15 +1,15 @@
-﻿namespace csOdin.LinqUtilsTests.FiltersTests
+﻿namespace csOdin.LinqUtils.Tests.FiltersTests
 {
+    using csOdin.LinqUtils.Tests.Models;
     using FluentAssertions;
     using LinqUtils.Filters;
-    using LinqUtilsTests.Models;
     using System.Linq;
     using Xunit;
 
     public class AndClauseTest
     {
         [Fact]
-        public void AndClauseWithOnlyAndConditions()
+        public void FilterByAndClauseWithOnlyAndConditionsShouldReturnMatchingValues()
         {
             var propertyValue1 = "Person";
             var propertyValue2 = "PersonSur 1";
@@ -30,7 +30,7 @@
         }
 
         [Fact]
-        public void AndClauseWithOrConditions()
+        public void FilterByAndClauseWithOrConditionsShouldReturnMatchingValues()
         {
             var andPropertyValue = "Person";
 
@@ -62,6 +62,16 @@
 
             filteredPeople.Where(i => i.Name.Contains(andPropertyValue) &&
                                         (i.Address.City.Contains(orPropertyValue1) || i.Address.City.Contains(orPropertyValue2))).Should().NotBeEmpty();
+        }
+
+        [Fact]
+        public void FilterByAndClauseWithoutconditionsShouldReturnException()
+        {
+            var people = DummyData.GetPeople().AsQueryable();
+            var expectedcount = people.Count();
+
+            var andClause = new AndClause<Person>();
+            Assert.Throws<FilterClauseWithoutConditionsException>(() => andClause.ToLinqExpression());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace csOdin.LinqUtilsTests.Models
+﻿namespace csOdin.LinqUtils.Tests.Models
 {
     using System.Collections.Generic;
 

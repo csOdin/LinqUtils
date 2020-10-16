@@ -1,5 +1,6 @@
 ﻿namespace csOdin.LinqUtils.Filters
 {
+    using csOdin.LinqUtils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -21,19 +22,21 @@
 
         public override Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter)
         {
-            if ((Conditions == null || !Conditions.Any()) && (_orClauses == null || !_orClauses.Any()))
+            Expression andExpression = Expression.Constant(true);
+            if (Conditions.IsNullOrempty() && _orClauses.IsNullOrempty() && Expressions.IsNullOrempty())
             {
-                return null;
+                throw new FilterClauseWithoutConditionsException();
             }
 
             var andClauses = new List<Expression>();
-            Conditions.ToList().ForEach(condition => andClauses.Add(condition.ToLinqExpression(parameter)));
+            Conditions.ToList().ForEach(condition => andClauses.Add(condition.ToLinqExpression(parameter).Body));
 
-            var andExpression = andClauses.First();
-            andClauses.Skip(1).ToList().ForEach(ac => andExpression = Expression.AndAlso(andExpression, ac));
+            andClauses.ToList().ForEach(ac => andExpression = Expression.AndAlso(andExpression, ac));
 
             _orClauses.ForEach(oc => andExpression = Expression.AndAlso(andExpression, oc.ToLinqExpression(parameter).Body));
 
+            Expressions.ForEach(ex => andExpression = Expression.AndAlso(andExpression, ex.Body));
+            
             return Expression.Lambda<Func<T, bool>>(andExpression, parameter);
         }
     }

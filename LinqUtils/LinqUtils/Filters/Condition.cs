@@ -28,19 +28,21 @@
         public string Value { get; private set; }
         private List<string> PropertyNameParts => PropertyName.Split('.').ToList();
 
-        public Expression ToLinqExpression()
+        public Expression<Func<T, bool>> ToLinqExpression()
         {
             var parameter = Expression.Parameter(typeof(T));
             return ToLinqExpression(parameter);
         }
 
-        internal Expression ToLinqExpression(ParameterExpression parameter)
+        internal Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter)
+
         {
             var stringContainsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
             Expression body = parameter;
             PropertyNameParts.ForEach(namePart => body = Expression.PropertyOrField(body, namePart));
 
-            return Expression.Call(body, "contains", null, Expression.Constant(Value));
+            var conditionExpression = Expression.Call(body, "contains", null, Expression.Constant(Value));
+            return Expression.Lambda<Func<T, bool>>(conditionExpression, parameter);
         }
     }
 }

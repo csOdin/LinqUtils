@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqUtils", "LinqUtils\LinqUtils.csproj", "{E82DACD1-7CD8-45DF-AE7D-E8ADDD546097}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csOdin.LinqUtils", "LinqUtils\csOdin.LinqUtils.csproj", "{E82DACD1-7CD8-45DF-AE7D-E8ADDD546097}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqUtilsTests", "LinqUtilsTests\LinqUtilsTests.csproj", "{31AA5489-8DBA-4F3F-B63D-B2411AAC4897}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csOdin.LinqUtils.Tests", "LinqUtilsTests\csOdin.LinqUtils.Tests.csproj", "{31AA5489-8DBA-4F3F-B63D-B2411AAC4897}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D0DD7A6F-D9FC-44C2-A78C-50B4341FE744}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AE77B7D9-365F-4B3D-9D90-46C20B36CDBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +28,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E82DACD1-7CD8-45DF-AE7D-E8ADDD546097} = {D0DD7A6F-D9FC-44C2-A78C-50B4341FE744}
+		{31AA5489-8DBA-4F3F-B63D-B2411AAC4897} = {AE77B7D9-365F-4B3D-9D90-46C20B36CDBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CD98EDBA-2680-4891-87DC-65E0C7192A27}
