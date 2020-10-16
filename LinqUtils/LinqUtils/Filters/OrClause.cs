@@ -20,7 +20,6 @@
 
         public override Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter)
         {
-
             ValidatecConditions();
 
             Expression orExpression = Expression.Constant(false);
@@ -31,8 +30,6 @@
             orClauses.ToList().ForEach(oc => orExpression = Expression.OrElse(orExpression, oc));
 
             _filterClauses.ForEach(ac => orExpression = Expression.OrElse(orExpression, ac.ToLinqExpression(parameter).Body));
-
-            Expressions.ForEach(ex => orExpression = Expression.OrElse(orExpression, ex.Body));
 
             return Expression.Lambda<Func<T, bool>>(orExpression, parameter);
         }

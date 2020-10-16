@@ -1,4 +1,4 @@
-﻿namespace csOdin.LinqUtils.Tests.FiltersTests
+namespace csOdin.LinqUtils.Tests.FiltersTests
 {
     using csOdin.LinqUtils.Tests.Models;
     using FluentAssertions;
@@ -54,7 +54,6 @@
             var filterCondition = new Condition<Person>("Name", FilterOperators.Contains, propertyValue1);
 
             var filter = filterCondition.ToLinq();
-
 
             var filteredPeople = people.Where(filter);
             filteredPeople.Should().NotBeNull();

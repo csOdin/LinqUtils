@@ -1,6 +1,5 @@
 ﻿namespace csOdin.LinqUtils.Filters
 {
-    using csOdin.LinqUtils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -31,8 +30,6 @@
 
             _filterClauses.ForEach(oc => andExpression = Expression.AndAlso(andExpression, oc.ToLinqExpression(parameter).Body));
 
-            Expressions.ForEach(ex => andExpression = Expression.AndAlso(andExpression, ex.Body));
-            
             return Expression.Lambda<Func<T, bool>>(andExpression, parameter);
         }
     }

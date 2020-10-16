@@ -12,7 +12,6 @@
         public FilterClause() => Conditions = new List<Condition<T>>();
 
         protected List<Condition<T>> Conditions { get; }
-        protected List<Expression<Func<T, bool>>> Expressions { get; }
 
         public void Add(params Condition<T>[] conditions)
         {
@@ -21,15 +20,6 @@
                 return;
             }
             Conditions.AddRange(conditions);
-        }
-
-        public void Add(params Expression<Func<T, bool>>[] conditions)
-        {
-            if (conditions == null)
-            {
-                return;
-            }
-            Expressions.AddRange(conditions);
         }
 
         public abstract Expression<Func<T, bool>> ToLinqExpression(ParameterExpression parameter);

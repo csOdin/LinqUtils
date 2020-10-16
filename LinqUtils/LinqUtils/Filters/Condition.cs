@@ -33,7 +33,6 @@
         private List<string> PropertyNameParts => PropertyName.Split('.').ToList();
 
         public Expression<Func<T, bool>> ToLinq()
-
         {
             if (_expression != null)
             {
