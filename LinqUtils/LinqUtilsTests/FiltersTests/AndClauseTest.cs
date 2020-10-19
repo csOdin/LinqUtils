@@ -1,5 +1,7 @@
 ﻿namespace csOdin.LinqUtils.Tests.FiltersTests
 {
+    using csOdin.LinqUtils.Filters.Clauses;
+    using csOdin.LinqUtils.Filters.Conditions;
     using csOdin.LinqUtils.Tests.Models;
     using FluentAssertions;
     using LinqUtils.Filters;
@@ -16,8 +18,8 @@
 
             var people = DummyData.GetPeople().AsQueryable();
 
-            var condition1 = new Condition<Person>(o => o.Name, FilterOperators.Contains, propertyValue1);
-            var condition2 = new Condition<Person>(o => o.Surname, FilterOperators.Contains, propertyValue2);
+            var condition1 = ContainsCondition<Person>.Create(o => o.Name, propertyValue1);
+            var condition2 = ContainsCondition<Person>.Create(o => o.Surname, propertyValue2);
 
             var andClause = new AndClause<Person>();
             andClause.Add(condition1, condition2);
@@ -39,11 +41,11 @@
 
             var people = DummyData.GetPeople().AsQueryable();
 
-            var andCondition = new Condition<Person>(o => o.Name, FilterOperators.Contains, andPropertyValue);
+            var andCondition = ContainsCondition<Person>.Create(o => o.Name, andPropertyValue);
 
-            var orCondition1 = new Condition<Person>(o => o.Address.City, FilterOperators.Contains, orPropertyValue1);
+            var orCondition1 = ContainsCondition<Person>.Create(o => o.Address.City, orPropertyValue1);
 
-            var orCondition2 = new Condition<Person>(o => o.Address.City, FilterOperators.Contains, orPropertyValue2);
+            var orCondition2 = ContainsCondition<Person>.Create(o => o.Address.City, orPropertyValue2);
 
             var orClause = new OrClause<Person>();
             orClause.Add(orCondition1, orCondition2);

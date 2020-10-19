@@ -1,4 +1,4 @@
-﻿namespace csOdin.LinqUtils.Filters
+﻿namespace csOdin.LinqUtils.Filters.Clauses
 {
     using System;
     using System.Collections.Generic;

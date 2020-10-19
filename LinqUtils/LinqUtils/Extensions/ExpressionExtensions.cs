@@ -5,17 +5,21 @@
 
     public static class ExpressionExtensions
     {
+        public static MemberExpression AsMemberExpression<TIn, TOut>(this Expression<Func<TIn, TOut>> expr) =>
+            (expr.Body as MemberExpression) ??
+            (!(expr.Body is UnaryExpression unary) ? null : unary.Operand as MemberExpression);
+
         public static string ToPropertyFullName<TIn, TOut>(this Expression<Func<TIn, TOut>> expr)
         {
-            MemberExpression me;
-            me = (MemberExpression)expr.Body;
+            var member = expr.AsMemberExpression();
+            var propertyName = member.Member.Name;
 
-            var propertyName = me.Member.Name;
-            me = me.Expression as MemberExpression;
-            while (me != null)
+            member = member.Expression as MemberExpression;
+
+            while (member != null)
             {
-                propertyName = string.Join(".", me.Member.Name, propertyName);
-                me = me.Expression as MemberExpression;
+                propertyName = string.Join(".", member.Member.Name, propertyName);
+                member = member.Expression as MemberExpression;
             }
 
             return propertyName;

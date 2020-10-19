@@ -10,6 +10,9 @@
             {
                 Name = "Coder 1 name",
                 Surname  = "CoderSur 1 name",
+                IntProperty = 1970,
+                DecimalProperty = 1970.1M,
+                BoolProperty = true,
                 Address = new Address()
                 {
                     Street = "Street AC",
@@ -20,6 +23,9 @@
             {
                 Name = "Coder 2 name",
                 Surname  = "CoderSur 2 surname",
+                IntProperty = 1980,
+                DecimalProperty = 1980.1M,
+                BoolProperty = true,
                 Address = new Address()
                 {
                     Street = "Street BC",
@@ -30,6 +36,9 @@
             {
                 Name = "Coder 3 name",
                 Surname  = "CoderSur 3 surname",
+                IntProperty = 1990,
+                DecimalProperty = 1990.1M,
+                BoolProperty = false,
                 Address = new Address()
                 {
                     Street = "Street CC",
@@ -53,6 +62,9 @@
             {
                 Name = "Person 1 name",
                 Surname  = "PersonSur 1 name",
+                IntProperty = 1970,
+                DecimalProperty = 1970.2M,
+                BoolProperty = true,
                 Address = new Address()
                 {
                     Street = "Street AA",
@@ -63,6 +75,9 @@
             {
                 Name = "Person 2 name",
                 Surname  = "PersonSur 2 name",
+                IntProperty = 1980,
+                DecimalProperty = 1980.2M,
+                BoolProperty = true,
                 Address = new Address()
                 {
                     Street = "Street BA",
@@ -73,6 +88,9 @@
             {
                 Name = "Person 3 name",
                 Surname  = "PersonSur 3 name",
+                IntProperty = 1990,
+                DecimalProperty = 1990.2M,
+                BoolProperty = false,
                 Address = new Address()
                 {
                     Street = "Street CA",
@@ -87,6 +105,9 @@
             {
                 Name = "User 1 name",
                 Surname  = "UserSur 1 name",
+                IntProperty = 1970,
+                DecimalProperty = 1970.3M,
+                BoolProperty = true,
                 Address = new Address()
                 {
                     Street = "Street AB",
@@ -97,6 +118,9 @@
             {
                 Name = "User 2 name",
                 Surname  = "UserSur 2 name",
+                IntProperty = 1980,
+                DecimalProperty = 1980.3M,
+                BoolProperty = true,
                 Address = new Address()
                 {
                     Street = "Street BB",
@@ -107,6 +131,9 @@
             {
                 Name = "User 3 name",
                 Surname  = "UserSur 3 name",
+                IntProperty = 1990,
+                DecimalProperty = 1990.3M,
+                BoolProperty = false,
                 Address = new Address()
                 {
                     Street = "Street CB",

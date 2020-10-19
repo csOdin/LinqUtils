@@ -1,6 +1,7 @@
-﻿namespace csOdin.LinqUtils.Filters
+﻿namespace csOdin.LinqUtils.Filters.Clauses
 {
     using csOdin.LinqUtils.Extensions;
+    using csOdin.LinqUtils.Filters.Conditions;
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
