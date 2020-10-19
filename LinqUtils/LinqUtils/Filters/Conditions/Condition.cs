@@ -10,7 +10,7 @@
     {
         private readonly Expression<Func<T, bool>> _expression = null;
 
-        public Condition(Expression<Func<T, bool>> condition) => _expression = condition;
+        protected Condition(Expression<Func<T, bool>> condition) => _expression = condition;
 
         protected Condition(Expression<Func<T, object>> property, object value)
         {

@@ -1,3 +1,4 @@
+
 # LinqUtils
 LinqUtils provide utilities to easily create Linq expressions from onject properties or strings
 
@@ -24,21 +25,30 @@ All following examples are based on the followin model
 ```
 
 ### Conditions
+ - ExpressionCondition
+ - ContainsCondition
+ - EqualsCondition
+ - StartsWithCondition
+ - EndsWithCondition
+ - GreaterThanCondition
+ - GreaterThanOrEqualsCondition
+ - LessThanCondition
+ - LessThanOrEqualsCondition
 #### from Lambda expression
 ``` csharp
-	var condition = new Condition<Person>(p => p.Name, FilterOperators.Contains, "searchedValue");
+	var condition = ContainsCondition<Person>.Create(p => p.Name, "searchedValue");
 	var filter = condition.ToLinq();
 	// filter = o => o.Name.Contains("searchedValue");
 ```
 #### from string
 ``` csharp
-	var condition = new Condition<Person>("Name", FilterOperators.Contains, "searchedValue");
+	var condition = ContainsCondition<Person>.Create("Name", "searchedValue");
 	var filter = condition.ToLinq();
 	// filter = o => o.Name.Contains("searchedValue");	
 ```
 #### from expression
 ``` csharp
-	var condition = new Condition<Person>(o => o.Name.Contains("searchedValue"));
+	var condition = new ExpressionCondition<Person>.Create(o => o.Name.Contains("searchedValue"));
 	var filter = condition.ToLinq();
 	// filter = o => o.Name.Contains("searchedValue");	
 ```
@@ -47,8 +57,8 @@ Creates an And clause that includes all given conditions
 ``` csharp
 	var people = new List<Person>();
 	// Populate people
-	var condition1 = new Condition<Person>(p => p.Name, FilterOperators.Contains, "searchedValue1");
-	var condition1 = new Condition<Person>(p => p.Address.City, FilterOperators.Contains, "searchedValue2");
+	var condition1 = ContainsCondition<Person>.Create(p => p.Name, "searchedValue1");
+	var condition1 = ContainsCondition<Person>.Create(p => p.Address.City, "searchedValue2");
 	
 	var andClause = new AndClause();
 	andClause.Add(condition1, condition2);
@@ -61,8 +71,8 @@ Creates an Or clause that includes all given conditions
 ``` csharp
 	var people = new List<Person>();
 	// Populate people
-	var condition1 = new Condition<Person>(p => p.Name, FilterOperators.Contains, "searchedValue1");
-	var condition2 = new Condition<Person>(p => p.Name, FilterOperators.Contains, "searchedValue2");
+	var condition1 = ContainsCondition<Person>.Create(p => p.Name, "searchedValue1");
+	var condition2 = ContainsCondition<Person>.Create(p => p.Name, "searchedValue2");
 	
 	var orClause = new OrClause();
 	orClause.Add(condition1, condition2);
@@ -76,9 +86,9 @@ Given 3 conditions :
 ``` csharp
 	var people = new List<Person>();
 	// Populate people
-	var condition1 = new Condition<Person>(p => p.Name, FilterOperators.Contains, "searchedValue1");
-	var condition2 = new Condition<Person>(p => p.Name, FilterOperators.Contains, "searchedValue2");
-	var condition3 = new Condition<Person>(p => p.Address.City, FilterOperators.Contains, "searchedValue3");
+	var condition1 = ContainsCondition<Person>.Create(p => p.Name, "searchedValue1");
+	var condition2 = ContainsCondition<Person>.Create(p => p.Name, "searchedValue2");
+	var condition3 = ContainsCondition<Person>.Create(p => p.Address.City, "searchedValue3");
 ```	
 **And with nested Or**
 ```csharp

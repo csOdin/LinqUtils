@@ -24,8 +24,7 @@
             Expression body = parameter;
             PropertyNameParts.ForEach(namePart => body = Expression.PropertyOrField(body, namePart));
 
-            var method = Value.GetType().GetMethod("Equals", new[] { Value.GetType() });
-            var conditionExpression = Expression.Call(body, method, Expression.Constant(Value));
+            var conditionExpression = Expression.Equal(body, Expression.Constant(Value));
             return Expression.Lambda<Func<T, bool>>(conditionExpression, parameter);
         }
     }

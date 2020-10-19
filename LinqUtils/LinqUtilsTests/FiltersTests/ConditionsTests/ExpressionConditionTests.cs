@@ -15,7 +15,7 @@ namespace csOdin.LinqUtils.Tests.FiltersTests.ConditionsTests
 
             var people = DummyData.GetPeople().AsQueryable();
 
-            var filterCondition = new Condition<Person>(o => o.Name.Contains(propertyValue1));
+            var filterCondition = ExpressionCondition<Person>.Create(o => o.Name.Contains(propertyValue1));
 
             var filter = filterCondition.ToLinq();
 

@@ -1,4 +1,4 @@
-﻿namespace csOdin.LinqUtils.Tests.FiltersTests
+﻿namespace csOdin.LinqUtils.Tests.FiltersTests.ClausesTests
 {
     using csOdin.LinqUtils.Filters.Clauses;
     using csOdin.LinqUtils.Filters.Conditions;
