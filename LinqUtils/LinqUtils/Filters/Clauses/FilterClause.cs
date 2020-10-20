@@ -1,6 +1,5 @@
 ﻿namespace csOdin.LinqUtils.Filters.Clauses
 {
-    using csOdin.LinqUtils.Extensions;
     using csOdin.LinqUtils.Filters.Conditions;
     using System;
     using System.Collections.Generic;
@@ -14,15 +13,6 @@
 
         protected List<Condition<T>> Conditions { get; }
 
-        public void Add(params Condition<T>[] conditions)
-        {
-            if (conditions == null)
-            {
-                return;
-            }
-            Conditions.AddRange(conditions);
-        }
-
         public Expression<Func<T, bool>> ToLinq()
         {
             var parameter = Expression.Parameter(typeof(T));
@@ -31,12 +21,14 @@
 
         public abstract Expression<Func<T, bool>> ToLinq(ParameterExpression parameter);
 
-        protected void ValidatecConditions()
+        protected FilterClause<T> Add<TClause>(params Condition<T>[] conditions)
+                            where TClause : FilterClause<T>
         {
-            if (Conditions.IsNullOrempty() && _filterClauses.IsNullOrempty())
+            if (conditions != null)
             {
-                throw new FilterClauseWithoutConditionsException();
+                Conditions.AddRange(conditions);
             }
+            return (TClause)this;
         }
     }
 }

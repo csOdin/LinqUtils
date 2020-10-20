@@ -36,21 +36,18 @@ All following examples are based on the followin model
  - LessThanOrEqualsCondition
 #### from Lambda expression
 ``` csharp
-	var condition = ContainsCondition<Person>.Create(p => p.Name, "searchedValue");
-	var filter = condition.ToLinq();
-	// filter = o => o.Name.Contains("searchedValue");
+	var filter = ContainsCondition<Person>.Create(p => p.Name, "searchedValue");
+	var filteredlist = myList.Where(filter);
 ```
 #### from string
 ``` csharp
-	var condition = ContainsCondition<Person>.Create("Name", "searchedValue");
-	var filter = condition.ToLinq();
-	// filter = o => o.Name.Contains("searchedValue");	
+	var filter = ContainsCondition<Person>.Create("Name", "searchedValue");
+	var filteredlist = myList.Where(filter);
 ```
 #### from expression
 ``` csharp
-	var condition = new ExpressionCondition<Person>.Create(o => o.Name.Contains("searchedValue"));
-	var filter = condition.ToLinq();
-	// filter = o => o.Name.Contains("searchedValue");	
+	var filter = new ExpressionCondition<Person>.Create(o => o.Name.Contains("searchedValue"));
+	var filteredlist = myList.Where(filter);
 ```
 ### And Clause	
 Creates an And clause that includes all given conditions
@@ -62,9 +59,8 @@ Creates an And clause that includes all given conditions
 	
 	var andClause = new AndClause();
 	andClause.Add(condition1, condition2);
-	filter = andClause.ToLinq();
-	// returns confition1 && condition2
-	// filter = o => o.Name.Contains("searchedValue1") && o.Address.City.Contains("searchedValue2")
+
+	var filteredlist = myList.Where(andClause);
 ```
 ### Or Clause	
 Creates an Or clause that includes all given conditions
@@ -76,9 +72,8 @@ Creates an Or clause that includes all given conditions
 	
 	var orClause = new OrClause();
 	orClause.Add(condition1, condition2);
-	filter = orClause.ToLinq();
-	// returns confition1 || condition2
-	// filter = o => o.Name.Contains("searchedValue1") || o.Name.Contains("searchedValue2")
+
+	var filteredlist = myList.Where(orClause);
 ```	
 ### Complex And/Or clauses
 Combinations of nested And / Or clauses can be created
@@ -99,9 +94,7 @@ Given 3 conditions :
 	andClause.Add(condition1);
 	andclause.Add(orClause);
 	
-	filter = andClause.ToLinq();
-	// returns condition3 && (condition1 || condition2)
-	// filter = o => o.Address.City.Contains("searchedValue3") && (o.Name.Contains("searchedValue1") || o.Name.Contains("searchedValue2"))
+	var filteredlist = myList.Where(andclause);
 ```
 **Or with nested And**
 ```csharp
@@ -112,7 +105,5 @@ Given 3 conditions :
 	andClause.Add(condition1);
 	andclause.Add(andClause);
 	
-	filter = orClause.ToLinq();
-	// returns condition3 || (condition1 && condition2)
-	// filter = o => o.Address.City.Contains("searchedValue3") || (o.Name.Contains("searchedValue1") && o.Name.Contains("searchedValue2"))
+	var filteredlist = myList.Where(orClause);
 ```
