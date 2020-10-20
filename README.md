@@ -34,6 +34,12 @@ All following examples are based on the followin model
  - GreaterThanOrEqualsCondition
  - LessThanCondition
  - LessThanOrEqualsCondition
+
+ Required  Using statement
+ ``` csharp
+	Using csOdin.LinqUtils.Filters;
+```
+
 #### from Lambda expression
 ``` csharp
 	var condition = ContainsCondition<Person>.Create(p => p.Name, "searchedValue");
