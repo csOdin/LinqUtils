@@ -2,9 +2,6 @@
 # LinqUtils
 LinqUtils provide utilities to easily create Linq expressions from onject properties or strings
 
-## Filters
-Create conditions based on your class properties and get Linq expression to apply in the Where clause of your Linq command.
-
 ### Sample data
 All following examples are based on the followin model
 ``` csharp
@@ -23,6 +20,9 @@ All following examples are based on the followin model
         public string Surname { get; set; }
     }
 ```
+
+## Filters
+Create conditions based on your class properties and get Linq expression to apply in the Where clause of your Linq command.
 
 ### Conditions
  - ExpressionCondition
@@ -112,4 +112,27 @@ Given 3 conditions :
 	andclause.Add(andClause);
 	
 	var filteredlist = myList.Where(orClause);
+```
+## OrderBy
+Create order by clauses based on your class properties or from SQL order by strig
+ ``` csharp
+	Using csOdin.LinqUtils.OrderBy;
+```
+
+#### from string
+```csharp
+	var orderByClause = "Address.City, Name desc";
+
+	var orderedList = myList.OrderBy(orderByClause);
+```
+#### from properties
+```csharp
+	Using csOdin.LinqUtils.OrderBy.Clauses;
+
+    var orderByClause = OrderByClause<Person>.Create()
+		.AddAscending(o => o.Name)
+        .AddDescending("Address.City")
+        .AddAscending(o => o.IntProperty);
+
+	var orderedList = myList.OrderBy(orderByClause);
 ```
