@@ -1,10 +1,13 @@
 ﻿namespace csOdin.LinqUtils.OrderBy
 {
+    using csOdin.LinqUtils.OrderBy.Clauses;
     using System;
     using System.Linq;
 
     public static class OrderByExtension
     {
+        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, OrderByClause<T> orderByClause) => query.OrderBy(orderByClause.ToString());
+
         public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> query, string orderByClause)
         {
             var orderedQueriable = new OrderedQueriable<T>();
