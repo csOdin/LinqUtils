@@ -21,11 +21,9 @@
             var condition1 = ContainsCondition<Person>.Create(o => o.Name, propertyValue1);
             var condition2 = ContainsCondition<Person>.Create(o => o.Surname, propertyValue2);
 
-            var andClause = new AndClause<Person>();
-            andClause.Add(condition1, condition2);
-            var filter = andClause.ToLinq();
-
+            var filter = AndClause<Person>.Create(condition1, condition2);
             var filteredPeople = people.Where(filter);
+
             filteredPeople.Should().NotBeNull();
             filteredPeople.Where(i => !(i.Name.Contains(propertyValue1) && i.Surname.Contains(propertyValue2))).Should().BeEmpty();
             filteredPeople.Where(i => i.Name.Contains(propertyValue1) && i.Surname.Contains(propertyValue2)).Should().NotBeEmpty();
@@ -41,39 +39,20 @@
 
             var people = DummyData.GetPeople().AsQueryable();
 
-            var andCondition = ContainsCondition<Person>.Create(o => o.Name, andPropertyValue);
-
             var orCondition1 = ContainsCondition<Person>.Create(o => o.Address.City, orPropertyValue1);
-
             var orCondition2 = ContainsCondition<Person>.Create(o => o.Address.City, orPropertyValue2);
+            var orClause = OrClause<Person>.Create(orCondition1, orCondition2);
 
-            var orClause = new OrClause<Person>();
-            orClause.Add(orCondition1, orCondition2);
-
-            var andClause = new AndClause<Person>();
-            andClause.Add(andCondition);
-            andClause.Add(orClause);
-
-            var filter = andClause.ToLinq();
-
+            var andCondition = ContainsCondition<Person>.Create(o => o.Name, andPropertyValue);
+            var filter = AndClause<Person>.Create(andCondition).Add(orClause);
             var filteredPeople = people.Where(filter);
-            filteredPeople.Should().NotBeNull();
 
+            filteredPeople.Should().NotBeNull();
             filteredPeople.Where(i => !i.Name.Contains(andPropertyValue) ||
                                         (!i.Address.City.Contains(orPropertyValue1) && !i.Address.City.Contains(orPropertyValue2))).Should().BeEmpty();
 
             filteredPeople.Where(i => i.Name.Contains(andPropertyValue) &&
                                         (i.Address.City.Contains(orPropertyValue1) || i.Address.City.Contains(orPropertyValue2))).Should().NotBeEmpty();
-        }
-
-        [Fact]
-        public void FilterByAndClauseWithoutconditionsShouldReturnException()
-        {
-            var people = DummyData.GetPeople().AsQueryable();
-            var expectedcount = people.Count();
-
-            var andClause = new AndClause<Person>();
-            Assert.Throws<FilterClauseWithoutConditionsException>(() => andClause.ToLinq());
         }
     }
 }

@@ -1,5 +1,6 @@
 namespace csOdin.LinqUtils.Tests.FiltersTests.ConditionsTests
 {
+    using csOdin.LinqUtils.Filters;
     using csOdin.LinqUtils.Tests.Models;
     using FluentAssertions;
     using LinqUtils.Filters.Conditions;
@@ -15,13 +16,10 @@ namespace csOdin.LinqUtils.Tests.FiltersTests.ConditionsTests
 
             var people = DummyData.GetPeople().AsQueryable();
 
-            var filterCondition = EndsWithCondition<Person>.Create(o => o.Name, propertyValue1);
-
-            var filter = filterCondition.ToLinq();
-
+            var filter = EndsWithCondition<Person>.Create(o => o.Name, propertyValue1);
             var filteredPeople = people.Where(filter);
-            filteredPeople.Should().NotBeNull();
 
+            filteredPeople.Should().NotBeNull();
             filteredPeople.Where(i => !i.Name.EndsWith(propertyValue1)).Should().BeEmpty();
             filteredPeople.Where(i => i.Name.EndsWith(propertyValue1)).Should().NotBeEmpty();
         }
@@ -33,13 +31,10 @@ namespace csOdin.LinqUtils.Tests.FiltersTests.ConditionsTests
 
             var people = DummyData.GetPeople().AsQueryable();
 
-            var filterCondition = EndsWithCondition<Person>.Create("Name", propertyValue1);
-
-            var filter = filterCondition.ToLinq();
-
+            var filter = EndsWithCondition<Person>.Create("Name", propertyValue1);
             var filteredPeople = people.Where(filter);
-            filteredPeople.Should().NotBeNull();
 
+            filteredPeople.Should().NotBeNull();
             filteredPeople.Where(i => !i.Name.EndsWith(propertyValue1)).Should().BeEmpty();
             filteredPeople.Where(i => i.Name.EndsWith(propertyValue1)).Should().NotBeEmpty();
         }

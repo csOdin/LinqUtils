@@ -1,5 +1,6 @@
 ﻿namespace csOdin.LinqUtils.Filters.Clauses
 {
+    using csOdin.LinqUtils.Filters.Conditions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -7,20 +8,31 @@
 
     public class OrClause<T> : FilterClause<T>
     {
-        public void Add(params AndClause<T>[] andClauses)
+        private OrClause(params AndClause<T>[] andClauses) => Add(andClauses);
+
+        private OrClause(params Condition<T>[] conditions) => Add(conditions);
+
+        public static OrClause<T> Create<T>(params Condition<T>[] conditions) => new OrClause<T>(conditions);
+
+        public static OrClause<T> Create<T>(params AndClause<T>[] andClauses) => new OrClause<T>(andClauses);
+
+        public OrClause<T> Add(params AndClause<T>[] andClauses)
         {
             if (andClauses == null)
             {
-                return;
+                _filterClauses.AddRange(andClauses);
             }
+            return this;
+        }
 
-            _filterClauses.AddRange(andClauses);
+        public OrClause<T> Add(params Condition<T>[] conditions)
+        {
+            Add<OrClause<T>>(conditions);
+            return this;
         }
 
         public override Expression<Func<T, bool>> ToLinq(ParameterExpression parameter)
         {
-            ValidatecConditions();
-
             Expression orExpression = Expression.Constant(false);
 
             var orClauses = new List<Expression>();
