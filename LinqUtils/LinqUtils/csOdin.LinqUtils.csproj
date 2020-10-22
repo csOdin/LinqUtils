@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>csOdin.LinqUtils</AssemblyName>
     <RootNamespace>csOdin.LinqUtils</RootNamespace>
+    <Authors>c#Odin</Authors>
+    <Description>Utilities to create Where and Order By linq expressions from property names as strings or expressions</Description>
+    <PackageProjectUrl>https://github.com/csOdin/LinqUtils</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/csOdin/LinqUtils</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
