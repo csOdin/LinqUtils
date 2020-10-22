@@ -10,7 +10,7 @@ namespace csOdin.LinqUtils.Tests.FiltersTests.ConditionsTests
     public class StartsWithConditionTests
     {
         [Fact]
-        public void FilterByLambdaConditionShouldReturnMatchingValues()
+        public void FilterByConditionShouldReturnMatchingValues()
         {
             var propertyValue1 = "Person";
 
@@ -25,18 +25,18 @@ namespace csOdin.LinqUtils.Tests.FiltersTests.ConditionsTests
         }
 
         [Fact]
-        public void FilterByStringConditionShouldReturnMatchingValues()
+        public void FilterByNegatedConditionShouldReturnNotMatchingValues()
         {
             var propertyValue1 = "Person";
 
             var people = DummyData.GetPeople().AsQueryable();
 
-            var filter = StartsWithCondition<Person>.Create("Name", propertyValue1);
+            var filter = StartsWithCondition<Person>.Create(o => o.Name, propertyValue1).Negate();
             var filteredPeople = people.Where(filter);
 
             filteredPeople.Should().NotBeNull();
-            filteredPeople.Where(i => !i.Name.StartsWith(propertyValue1)).Should().BeEmpty();
-            filteredPeople.Where(i => i.Name.StartsWith(propertyValue1)).Should().NotBeEmpty();
+            filteredPeople.Where(i => !i.Name.StartsWith(propertyValue1)).Should().NotBeEmpty();
+            filteredPeople.Where(i => i.Name.StartsWith(propertyValue1)).Should().BeEmpty();
         }
     }
 }

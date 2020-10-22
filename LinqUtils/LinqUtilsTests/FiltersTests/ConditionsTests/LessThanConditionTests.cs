@@ -25,6 +25,36 @@ namespace csOdin.LinqUtils.Tests.FiltersTests.ConditionsTests
         }
 
         [Fact]
+        public void DecimalLessThanNegatedConditionShouldReturnNotMatchingEntries()
+        {
+            var propertyValue1 = 1985M;
+
+            var people = DummyData.GetPeople().AsQueryable();
+
+            var filter = LessThanCondition<Person>.Create(o => o.DecimalProperty, propertyValue1).Negate();
+            var filteredPeople = people.Where(filter);
+
+            filteredPeople.Should().NotBeNull();
+            filteredPeople.Where(i => i.DecimalProperty > propertyValue1).Should().NotBeEmpty();
+            filteredPeople.Where(i => i.DecimalProperty < propertyValue1).Should().BeEmpty();
+        }
+
+        [Fact]
+        public void IntLessThanConditionNegatedShouldReturnNotMatchingEntries()
+        {
+            var propertyValue1 = 1985;
+
+            var people = DummyData.GetPeople().AsQueryable();
+
+            var filter = LessThanCondition<Person>.Create(o => o.IntProperty, propertyValue1).Negate();
+            var filteredPeople = people.Where(filter);
+
+            filteredPeople.Should().NotBeNull();
+            filteredPeople.Where(i => i.IntProperty > propertyValue1).Should().NotBeEmpty();
+            filteredPeople.Where(i => i.IntProperty < propertyValue1).Should().BeEmpty();
+        }
+
+        [Fact]
         public void IntLessThanConditionShouldReturnMatchingEntries()
         {
             var propertyValue1 = 1985;

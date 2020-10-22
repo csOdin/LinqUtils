@@ -26,18 +26,29 @@
 
         public string PropertyName { get; private set; }
         public object Value { get; private set; }
+        protected bool IsNegation { get; private set; } = false;
         protected List<string> PropertyNameParts => PropertyName.Split('.').ToList();
+
+        public Condition<T> Negate()
+        {
+            IsNegation = true;
+            return this;
+        }
 
         public Expression<Func<T, bool>> ToLinq()
         {
             if (_expression != null)
             {
-                return _expression;
+                return GetLamda(_expression.Body, _expression.Parameters.First());
             }
             var parameter = Expression.Parameter(typeof(T));
             return ToLinq(parameter);
         }
 
         internal virtual Expression<Func<T, bool>> ToLinq(ParameterExpression parameter) => throw new NotImplementedException();
+
+        protected Expression<Func<T, bool>> GetLamda(Expression conditionExpression, ParameterExpression parameter) => IsNegation
+                ? Expression.Lambda<Func<T, bool>>(Expression.Not(conditionExpression), parameter)
+                : Expression.Lambda<Func<T, bool>>(conditionExpression, parameter);
     }
 }
