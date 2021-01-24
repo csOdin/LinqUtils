@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Linq.Expressions;
 
-    public class Condition<T>
+    public abstract class Condition<T>
     {
         private readonly Expression<Func<T, bool>> _expression = null;
 

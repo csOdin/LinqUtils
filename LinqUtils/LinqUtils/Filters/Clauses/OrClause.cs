@@ -16,18 +16,15 @@
 
         public static OrClause<T> Create<T>(params AndClause<T>[] andClauses) => new OrClause<T>(andClauses);
 
-        public OrClause<T> Add(params AndClause<T>[] andClauses)
+        public OrClause<T> Add(params FilterClause<T>[] clauses)
         {
-            if (andClauses == null)
-            {
-                _filterClauses.AddRange(andClauses);
-            }
+            base.Add(clauses);
             return this;
         }
 
         public OrClause<T> Add(params Condition<T>[] conditions)
         {
-            Add<OrClause<T>>(conditions);
+            base.Add(conditions);
             return this;
         }
 

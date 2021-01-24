@@ -21,14 +21,23 @@
 
         public abstract Expression<Func<T, bool>> ToLinq(ParameterExpression parameter);
 
-        protected FilterClause<T> Add<TClause>(params Condition<T>[] conditions)
-                            where TClause : FilterClause<T>
+        protected FilterClause<T> Add(params FilterClause<T>[] clauses)
+        {
+            if (clauses != null)
+            {
+                _filterClauses.AddRange(clauses);
+            }
+
+            return this;
+        }
+
+        protected FilterClause<T> Add(params Condition<T>[] conditions)
         {
             if (conditions != null)
             {
                 Conditions.AddRange(conditions);
             }
-            return (TClause)this;
+            return this;
         }
     }
 }

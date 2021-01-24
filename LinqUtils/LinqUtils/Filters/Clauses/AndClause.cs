@@ -22,17 +22,13 @@
 
         public AndClause<T> Add(params Condition<T>[] conditions)
         {
-            Add<AndClause<T>>(conditions);
+            base.Add(conditions);
             return this;
         }
 
-        public AndClause<T> Add(params OrClause<T>[] orClauses)
+        public AndClause<T> Add(params FilterClause<T>[] clauses)
         {
-            if (orClauses != null)
-            {
-                _filterClauses.AddRange(orClauses);
-            }
-
+            base.Add(clauses);
             return this;
         }
 
