@@ -13,15 +13,7 @@
 
         protected List<Condition<T>> Conditions { get; }
 
-        public Expression<Func<T, bool>> ToLinq()
-        {
-            var parameter = Expression.Parameter(typeof(T));
-            return ToLinq(parameter);
-        }
-
-        public abstract Expression<Func<T, bool>> ToLinq(ParameterExpression parameter);
-
-        protected FilterClause<T> Add(params FilterClause<T>[] clauses)
+        public FilterClause<T> Add(params FilterClause<T>[] clauses)
         {
             if (clauses != null)
             {
@@ -31,7 +23,7 @@
             return this;
         }
 
-        protected FilterClause<T> Add(params Condition<T>[] conditions)
+        public FilterClause<T> Add(params Condition<T>[] conditions)
         {
             if (conditions != null)
             {
@@ -39,5 +31,13 @@
             }
             return this;
         }
+
+        public Expression<Func<T, bool>> ToLinq()
+        {
+            var parameter = Expression.Parameter(typeof(T));
+            return ToLinq(parameter);
+        }
+
+        public abstract Expression<Func<T, bool>> ToLinq(ParameterExpression parameter);
     }
 }

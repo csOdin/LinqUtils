@@ -16,21 +16,11 @@
 
         private AndClause(params Condition<T>[] conditions) => Add(conditions);
 
-        public static AndClause<T> Create<T>(params Condition<T>[] conditions) => new AndClause<T>(conditions);
+        public static AndClause<T> Create() => new AndClause<T>();
 
-        public static AndClause<T> Create<T>(params OrClause<T>[] orClauses) => new AndClause<T>(orClauses);
+        public static AndClause<T> Create(params Condition<T>[] conditions) => new AndClause<T>(conditions);
 
-        public AndClause<T> Add(params Condition<T>[] conditions)
-        {
-            base.Add(conditions);
-            return this;
-        }
-
-        public AndClause<T> Add(params FilterClause<T>[] clauses)
-        {
-            base.Add(clauses);
-            return this;
-        }
+        public static AndClause<T> Create(params OrClause<T>[] orClauses) => new AndClause<T>(orClauses);
 
         public override Expression<Func<T, bool>> ToLinq(ParameterExpression parameter)
         {

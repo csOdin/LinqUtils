@@ -8,25 +8,19 @@
 
     public class OrClause<T> : FilterClause<T>
     {
+        private OrClause()
+        {
+        }
+
         private OrClause(params AndClause<T>[] andClauses) => Add(andClauses);
 
         private OrClause(params Condition<T>[] conditions) => Add(conditions);
 
-        public static OrClause<T> Create<T>(params Condition<T>[] conditions) => new OrClause<T>(conditions);
+        public static OrClause<T> Create() => new OrClause<T>();
 
-        public static OrClause<T> Create<T>(params AndClause<T>[] andClauses) => new OrClause<T>(andClauses);
+        public static OrClause<T> Create(params Condition<T>[] conditions) => new OrClause<T>(conditions);
 
-        public OrClause<T> Add(params FilterClause<T>[] clauses)
-        {
-            base.Add(clauses);
-            return this;
-        }
-
-        public OrClause<T> Add(params Condition<T>[] conditions)
-        {
-            base.Add(conditions);
-            return this;
-        }
+        public static OrClause<T> Create(params AndClause<T>[] andClauses) => new OrClause<T>(andClauses);
 
         public override Expression<Func<T, bool>> ToLinq(ParameterExpression parameter)
         {
